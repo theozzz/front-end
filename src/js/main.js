@@ -14,6 +14,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x000011, 1);
 document.body.appendChild(renderer.domElement);
 
+
 // Call server to get shelf's json
 $.ajax({
     type: "GET",
@@ -37,6 +38,8 @@ generateDrawer(shelf, 'images/shelf.jpg', 0, 0, 0);
 generateEdges('images/shelf_edge.jpg', 0,0,0, (shelf.drawers).length);
 // Generate floor
 generateFloor('images/floor.jpg');
+console.log(THREE.FontUtils.face);
+
 
 // Listen to mouse down event (call onDocumentMouseDown)
 document.addEventListener('mousedown', onDocumentMouseDown, false);
@@ -55,6 +58,7 @@ var render = function () {
 // Calling the render function
 render();
 
+
 function onDocumentMouseDown(event) {
 
     event.preventDefault();
@@ -69,12 +73,14 @@ function onDocumentMouseDown(event) {
     // Get clicked object
     var intersects = raycaster.intersectObjects(objects);
 
+
     // Cube trick
     var tweenOpen,tweenClose;
     // Search all objects (faces) of the same drawer and move them on click
     if (intersects.length > 0) {
         var drawerName = intersects[0].object.drawer_name;
         for (var i = 0; i < objects.length; i++) {
+            console.log(objects[i].type);
             if (objects[i].name === drawerName) {
                 // Ouvre le drawer
                 if (objects[i].is_opened === false) {

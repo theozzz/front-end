@@ -77,6 +77,32 @@ function generateDrawer(obj_shelf, url_texture, pos_x, pos_y, pos_z) {
         planeFront["drawer_type"] = "front";
         planeFront["is_opened"] = false;
 
+
+        //Essaie ajout du text
+        var material = new THREE.MeshBasicMaterial({
+            color: 0xDAB30A
+        });
+        var textGeom = new THREE.TextGeometry( obj_shelf.drawers[i].name, {
+            size: 0.4, height: 0,
+            font: 'helvetiker', weight: 'normal',
+            bevelThickness: 0.1,
+            bevelSize: 0,
+            bevelEnabled: true
+        });
+    
+        var drawerNameMesh = new THREE.Mesh (textGeom, material);
+        drawerNameMesh.position.x = pos_x - 1;
+        drawerNameMesh.position.y = 0.8+i+pos_y;
+        drawerNameMesh.position.z = pos_z + 7.5;
+        drawerNameMesh['base_pos_x'] = pos_x - 2;
+        drawerNameMesh['base_pos_y'] = 0.8 + i + pos_y;
+        drawerNameMesh['base_pos_z'] = pos_z + 7.5
+        drawerNameMesh['name'] = obj_shelf.drawers[i].name;
+        drawerNameMesh['drawer_name'] = obj_shelf.drawers[i].name;
+        drawerNameMesh['is_opened'] = false;
+        drawerNameMesh['type'] = "text";
+       
+
         // Back Plane
         var planeBack = new THREE.Mesh(geometrySmall, materialSmall);
         planeBack.position.x = pos_x;
@@ -97,6 +123,11 @@ function generateDrawer(obj_shelf, url_texture, pos_x, pos_y, pos_z) {
         scene.add(planeRight);
         scene.add(planeFront);
         scene.add(planeBack);
+
+        //adding text to scene
+        scene.add(drawerNameMesh);
+
+        objects.push(drawerNameMesh);
 
         // Add planes to objects list
         objects.push(planeBottom);
